@@ -1,3 +1,5 @@
+// noinspection TypeScriptValidateTypes
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { HashPassword } from './hash-password';
 
