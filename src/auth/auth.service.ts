@@ -19,7 +19,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(email);
 
     if (!user)
-      throw new NotAcceptableException('email/password combination error 1');
+      throw new NotAcceptableException('email/password combination error');
 
     const passwordIsValid = await this.hashPassword.checkHash(
       password,
@@ -27,7 +27,7 @@ export class AuthService {
     );
 
     if (!passwordIsValid)
-      throw new NotAcceptableException('email/password combination error 2');
+      throw new NotAcceptableException('email/password combination error');
 
     return user;
   }
