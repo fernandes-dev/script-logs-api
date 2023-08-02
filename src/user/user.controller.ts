@@ -1,4 +1,12 @@
-import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  UseGuards,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto/user.dto';
 import { User } from './entities/user/user';
@@ -14,6 +22,17 @@ export class UserController {
 
   @Post('/')
   async create(@Body() user: UserDto): Promise<User> {
+    const emailExists = await this.userService.findByEmail(user.email);
+
+    if (emailExists)
+      throw new HttpException(
+        {
+          status: HttpStatus.UNAUTHORIZED,
+          message: 'Email already exists',
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
+
     const hashedPassword = await this.hashPassword.makeHash(user.password);
 
     return this.userService.create({

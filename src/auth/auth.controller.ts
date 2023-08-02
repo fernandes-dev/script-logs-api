@@ -10,7 +10,7 @@ interface IRequest {
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/login')
+  @Post('/sigin')
   async login(@Body() { email, password }: IRequest) {
     return this.authService.login(email, password);
   }
